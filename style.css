@@ -1,0 +1,25 @@
+body{
+    background-color:#FFA6A6;
+    color:black;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+main{
+    display:flex;
+    /* flex-direction:column; */
+    flex-wrap: wrap; 
+}
+p{
+    font-weight: 700;
+    color:black;
+}
+
+.card{
+    width:20%;
+    min-height:100px;
+    /* flex-direction:row; */
+    background-color:cornflowerblue;
+    margin:1%;
+    padding:1%;
+    border: 2px solid blue;
+}
