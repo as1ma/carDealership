@@ -46,11 +46,17 @@ select.addEventListener('change', function () {
     console.log(newResult);
     //newResult = this.value;
     if (newResult == "Price") {
-        cars = cars.sort((a, b) => a.price - b.price);
+        cars = cars.sort((a, b) => (a.price - b.price));
         console.log(cars);
+        renderCars();
     }
     else if (newResult == "Mileage") {
-        cars.sort((a, b) => a.mileage - b.mileage);
+        cars.sort((a, b) => (a.mileage - b.mileage));
+        renderCars();
+    }
+    else if (newResult == "Colour") {
+        cars.filter((c) => (c.colour == "red"));
+        renderCars();
     }
 });
 // function sortBy(){
