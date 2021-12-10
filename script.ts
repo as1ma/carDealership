@@ -38,41 +38,53 @@ if (cars == null){
 }
 
 //cars.sort((a,b)=>(a.price-b.price))
+// cars = cars.filter(c=>c.colour=="Black")
 renderCars()
 
 let saveButton = document.getElementById("Button")
 saveButton!.addEventListener("click", AddCarFromForm)
 
-// let deleteButton = document.getElementsByClassName("delete")
-// deleteButton.addEventListener("click", DeleteCard)
 
-// function DeleteCard(){
-//     alert("hi")
-//     //localStorage.removeItem("car", value)
-// } 
-
-let sortByOption = document.getElementById("sortBy")
-sortByOption!.addEventListener("change", sortBy)
-console.log(sortByOption)
 let select = document.querySelector('#sortBy');
 let result = document.querySelector('#result');
 select.addEventListener('change', function () {
         let newResult:string = result.textContent = this.value
-        console.log(newResult)
-        //newResult = this.value;
-
+    
         if (newResult == "Price"){
             cars = cars.sort((a,b)=>(a.price-b.price))
-            console.log(cars)
             renderCars()
         } else if (newResult == "Mileage"){
             cars.sort((a,b)=>(a.mileage-b.mileage))
             renderCars()
-        } else if (newResult == "Colour"){
-            
-            cars.filter((c)=>(c.colour == "red"))
-            renderCars()
+        }
         })
+
+let select2 = document.querySelector('#filterBy');
+let result2 = document.querySelector('#colourFilter');
+select2.addEventListener('change', function () {
+        let newResult2:string = result2.textContent = this.value
+        console.log(newResult2)
+    
+        if (newResult2 == "Red"){
+            cars = cars.filter(c=>c.colour == "Red")
+            renderCars()
+        } else if (newResult2 == "Black"){
+            cars = cars.filter(c=>c.colour=="Black")
+            renderCars()
+        } else if (newResult2 == "Blue"){
+            cars = cars.filter(c=>c.colour=="Blue")
+            renderCars()
+        } else if (newResult2 == "Grey"){
+            cars = cars.filter(c=>c.colour=="Grey")
+            renderCars()
+        }else if (newResult2 == "Silver"){
+            cars = cars.filter(c=>c.colour=="Silver")
+            renderCars()
+        }else if (newResult2 == "Aqua"){
+            cars = cars.filter(c=>c.colour=="Aqua")
+            renderCars()
+        }
+        }) 
 
 // function sortBy(){
 //     if (sortByOption?.onselect.value == "Price"){
