@@ -1,13 +1,17 @@
 "use strict";
 class Car {
-    constructor() {
+    constructor(make, model, colour, mileage, price) {
         //properties
         this.make = "";
         this.model = "";
         this.colour = "";
         this.mileage = 0;
         this.price = 0;
-        //methods
+        this.make = make;
+        this.model = model;
+        this.colour = colour;
+        this.mileage = mileage;
+        this.price = price;
     }
 }
 let makes = { FORD: [], TOYOTA: [], BMW: [], AUDI: [] };
@@ -21,13 +25,13 @@ cardHolder.classList.add("Holder");
 document.body.appendChild(cardHolder);
 //localStorage.removeItem("cars") // uncomment to reset
 let cars = [];
+cars.push(new Car("BMW", "X2", "Silver", 100000, 25000));
 cars = JSON.parse(localStorage.getItem("cars"));
+console.log(cars);
 if (cars == null) {
-    cars = generateRandomCars(makes, 6);
+    cars = generateRandomCars(makes, 20);
     saveCars();
 }
-//cars.sort((a,b)=>(a.price-b.price))
-// cars = cars.filter(c=>c.colour=="Black")
 renderCars();
 let saveButton = document.getElementById("Button");
 saveButton.addEventListener("click", AddCarFromForm);
@@ -44,41 +48,34 @@ select.addEventListener('change', function () {
         renderCars();
     }
 });
-let select2 = document.querySelector('#filterBy');
-let result2 = document.querySelector('#colourFilter');
-select2.addEventListener('change', function () {
-    let newResult2 = result2.textContent = this.value;
-    console.log(newResult2);
-    if (newResult2 == "Red") {
-        cars = cars.filter(c => c.colour == "Red");
-        renderCars();
-    }
-    else if (newResult2 == "Black") {
-        cars = cars.filter(c => c.colour == "Black");
-        renderCars();
-    }
-    else if (newResult2 == "Blue") {
-        cars = cars.filter(c => c.colour == "Blue");
-        renderCars();
-    }
-    else if (newResult2 == "Grey") {
-        cars = cars.filter(c => c.colour == "Grey");
-        renderCars();
-    }
-    else if (newResult2 == "Silver") {
-        cars = cars.filter(c => c.colour == "Silver");
-        renderCars();
-    }
-    else if (newResult2 == "Aqua") {
-        cars = cars.filter(c => c.colour == "Aqua");
-        renderCars();
-    }
-});
+let filterBy = document.getElementById('#filterBy');
+filterBy.addEventListener('change', filterByColour);
+function filterByColour() {
+    let filterColour = cars.filter((c) => c.colour == (filterBy.value));
+    //renderCars(filterColour)
+    renderCars();
+}
 // function sortBy(){
 //     if (sortByOption?.onselect.value == "Price"){
 //         cars = cars.sort((a,b)=>a.price-b.price)
 //     }
 //     cars = cars.sort((a,b)=>a.mileage-b.mileage)
+// }
+// a generic function to return a random selection from ANY array (i choose to pass it)
+// function pickFrom(list:string[]){
+//     let r=Math.floor(Math.random()* list.length)  // generate a random number between 0 and the list length (-1)
+//     return list[r]  //return the chosen item
+// }
+// function randomPic():string{
+//     //returns a random car image URL
+//     let pics=[]
+//     pics.push("https://cdn.tradecentregroup.io/image/upload/q_auto/f_auto/w_400/web/Group/cars/seat/ibiza.png")
+//     pics.push("https://cdn.tradecentregroup.io/image/upload/q_auto/f_auto/w_400/web/Group/cars/peugeot/108.png")
+//     pics.push("https://cdn.tradecentregroup.io/image/upload/q_auto/f_auto/w_400/web/Group/cars/renault/clio.png")
+//     pics.push("https://cdn.tradecentregroup.io/image/upload/q_auto/f_auto/w_400/web/Group/cars/ford/b-max.png")
+//     pics.push("https://cdn.tradecentregroup.io/image/upload/q_auto/f_auto/w_400/web/Group/cars/bmw/1-series.png")
+//     pics.push("https://cdn.tradecentregroup.io/image/upload/q_auto/f_auto/w_400/web/Group/cars/nissan/qashqai.png")
+//     return pickFrom(pics)
 // }
 function saveCars() {
     //store
@@ -134,9 +131,10 @@ function renderCars() {
         button.innerHTML = "Delete";
         card.appendChild(button);
         button.onclick = function () {
-            card.remove(); // doesn't remove from local storage
+            //card.remove() // doesn't remove from local storage
             //delete cars[this.dataset.index] //removes car[i] from array
             cars.splice(this.dataset.index, 1);
+            renderCars();
             saveCars();
         };
     }
